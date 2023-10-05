@@ -15,101 +15,97 @@ import lombok.extern.slf4j.Slf4j;
 @SpringBootApplication
 public class InterviewTest1Application implements CommandLineRunner {
 
-	@Autowired
-	private WatchRepository watchRepository;
+    @Autowired
+    private WatchRepository watchRepository;
 
-	public static void main(String[] args) {
-		SpringApplication.run(InterviewTest1Application.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(InterviewTest1Application.class, args);
+    }
 
-	@Override
-	public void run(String... args) throws Exception {
-		log.info("Starting test one");
+    @Override
+    public void run(String... args) throws Exception {
+        log.info("Starting test one");
 
-	}
+    }
 
-	public void slowAddWatches(List<Watch> watches) {
+    public void slowAddWatches(List<Watch> watches) {
 
-		watchRepository.saveAll(watches);
-//		for(Watch watch : watches) {
-//			watchRepository.save(watch);
-//		}
+        if (!watches.isEmpty()) {
+            watchRepository.saveAll(watches);
+        }
+    }
 
-	}
+    public void fastAddWatches(List<Watch> watches) {
 
-	public void fastAddWatches(List<Watch> watches) {
+        if (!watches.isEmpty()) {
+            watchRepository.saveAll(watches);
+        }
+    }
 
-		for(Watch watch : watches) {
-			watchRepository.save(watch);
-		}
+    public void removeOutOfStockWatches() {
 
-	}
-	
-	public void removeOutOfStockWatches() {
+        List<Watch> watches = watchRepository.findAll();
 
-		
-		List<Watch> watches = watchRepository.findAll();
-		
-		for(Watch watch : watches) {
-			
-			if(!watch.getAvailable()) {
-				watchRepository.delete(watch);
-			}
-		}
-		
+        for (Watch watch : watches) {
 
-	}
+            if (!watch.getAvailable()) {
 
-	public Watch addWatch(String name, Integer value, Integer sold, Boolean available) {
+                watchRepository.deleteById(watch.getName());
+            }
+        }
 
-		Watch watch = new Watch(null, null, null, null);
-		watch.setAvailable(available);
-		watch.setName(name);
-		watch.setSold(sold);
-		watch.setValue(value);
+    }
 
-		return watchRepository.save(watch);
+    public Watch addWatch(String name, Integer value, Integer sold, Boolean available) {
 
-	}
+        Watch watch = new Watch(null, null, null, null);
+        watch.setAvailable(available);
+        watch.setName(name);
+        watch.setSold(sold);
+        watch.setValue(value);
 
-	public Watch updateWatch(String name, Integer value, Integer sold, Boolean available) {
+        return watchRepository.save(watch);
 
-		Watch watch = getWatch(name);
-		watch.setAvailable(available);
-		watch.setSold(sold);
-		watch.setValue(value);
+    }
 
-		return watchRepository.save(watch);
+    public Watch updateWatch(String name, Integer value, Integer sold, Boolean available) {
 
-	}
+        Watch watch = getWatch(name);
+        watch.setAvailable(available);
+        watch.setSold(sold);
+        watch.setValue(value);
 
-	public Watch getWatch(String name) {
+        return watchRepository.save(watch);
 
-		return watchRepository.findById(name).orElse(null);
+    }
 
-	}
+    public Watch getWatch(String name) {
 
-	public Watch incrementWatchSales(String name) {
+        return watchRepository.findById(name).orElse(null);
 
-		Watch watch = watchRepository.findById(name).orElse(null);
+    }
 
-		if (watch != null) {
-			watch.setSold(watch.getSold()+1);
-			return watchRepository.save(watch);
+    public Watch incrementWatchSales(String name) {
 
-		}
+        Watch watch = watchRepository.findById(name).orElse(null);
 
-		return watch;
-	}
+        if (watch != null) {
+            watch.setValue(watch.getValue());
+            return watchRepository.save(watch);
 
-	public List<Watch> findAll() {
+        }
 
-		return watchRepository.findAll();
+        return watch;
+    }
 
-	}
+    public List<Watch> findAll() {
 
-	public void deleteWatch(String name) {
+        return watchRepository.findAll();
 
-		watchRepository.deleteById(name);
-	}
+    }
+
+    public void deleteWatch(String name) {
+
+        watchRepository.deleteById(name);
+    }
 }

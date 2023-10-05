@@ -9,67 +9,65 @@ import javax.persistence.Table;
 
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 @Entity
 @Table(name = "WATCH")
+@NoArgsConstructor
 public class Watch implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 349533338490577533L;
+    private static final long serialVersionUID = 349533338490577533L;
 
-	public Watch(String name, Integer value, Integer sold, Boolean available) {
+    public Watch(String name, Integer value, Integer sold, Boolean available) {
 
-		this.name = name;
-		this.value = value;
-		this.sold = sold;
-		this.available = available;
-	}
+        this.name = name;
+        this.value = value;
+        this.sold = sold;
+        this.available = available;
+    }
 
-	@Id
-	@Column(name = "NAME", length = 50)
-	private String name;
+    @Id
+    @Column(name = "NAME", length = 25)
+    private String name;
 
-	@Column(name = "value")
-	private Integer value;
+    @Column(name = "value")
+    private Integer value;
 
-	@Column(name = "sold")
-	private Integer sold;
+    @Column(name = "sold")
+    private Integer sold;
 
-	@Column(name = "available")
-	private Boolean available;
+    @Column(name = "available")
+    private Boolean available;
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Integer getValue() {
-		return value;
-	}
+    public Integer getValue() {
+        return value;
+    }
 
-	public void setValue(Integer value) {
-		this.value = value;
-	}
+    public void setValue(Integer value) {
+        this.value = value;
+    }
 
-	public Integer getSold() {
-		return sold;
-	}
+    public Integer getSold() {
+        return sold;
+    }
 
-	public void setSold(Integer sold) {
-		this.sold = sold;
-	}
+    public void setSold(Integer sold) {
+        this.sold = sold;
+    }
 
-	public Boolean getAvailable() {
-		return available;
-	}
+    public Boolean getAvailable() {
 
-	public void setAvailable(Boolean available) {
-		this.available = available;
-	}
+        return this.available;
+    }
+
+    public void setAvailable(Boolean available) {
+        this.available = available;
+    }
 
 }
