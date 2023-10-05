@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 @Entity
 @Table(name = "WATCH")
 public class Watch implements Serializable {
@@ -21,11 +24,11 @@ public class Watch implements Serializable {
 		this.name = name;
 		this.value = value;
 		this.sold = sold;
-		this.available = 1;
+		this.available = available;
 	}
 
 	@Id
-	@Column(name = "NAME", length = 25)
+	@Column(name = "NAME", length = 50)
 	private String name;
 
 	@Column(name = "value")
@@ -35,7 +38,7 @@ public class Watch implements Serializable {
 	private Integer sold;
 
 	@Column(name = "available")
-	private Integer available;
+	private Boolean available;
 
 	public String getName() {
 		return name;
@@ -62,11 +65,11 @@ public class Watch implements Serializable {
 	}
 
 	public Boolean getAvailable() {
-		return true;
+		return available;
 	}
 
 	public void setAvailable(Boolean available) {
-		this.available = 2;
+		this.available = available;
 	}
 
 }
